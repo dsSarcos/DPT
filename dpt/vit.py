@@ -498,7 +498,20 @@ def _make_pretrained_vitb_rn50_384(
     use_vit_only=False,
     enable_attention_hooks=False,
 ):
-    model = timm.create_model("vit_base_resnet50_384", pretrained=pretrained)
+    path = '/home/myid/das59179/pretrained/resnet50_patches_best_model.pkl'
+    #checkpoint = torch.load(path)
+    #state_dict = checkpoint['model_state']
+    #from collections import OrderedDict
+    #new_state_dict = OrderedDict()
+
+    #for k, v in state_dict.items():
+    #    if 'module.' in k:
+    #        k = k.replace('.module','')
+    #    new_state_dict[k]=v
+
+    #print(new_state_dict)
+    
+    model = timm.create_model("vit_base_resnet50_384", num_classes=23) #, checkpoint_path=path)
 
     hooks = [0, 1, 8, 11] if hooks == None else hooks
     return _make_vit_b_rn50_backbone(
@@ -515,7 +528,7 @@ def _make_pretrained_vitb_rn50_384(
 def _make_pretrained_vitl16_384(
     pretrained, use_readout="ignore", hooks=None, enable_attention_hooks=False
 ):
-    model = timm.create_model("vit_large_patch16_384", pretrained=pretrained)
+    model = timm.create_model("vit_large_patch16_384", num_classes=23)#, checkpoint_path='/home/myid/das59179/pretrained/vit_base_patches_best_model.pkl')
 
     hooks = [5, 11, 17, 23] if hooks == None else hooks
     return _make_vit_b16_backbone(
@@ -531,7 +544,8 @@ def _make_pretrained_vitl16_384(
 def _make_pretrained_vitb16_384(
     pretrained, use_readout="ignore", hooks=None, enable_attention_hooks=False
 ):
-    model = timm.create_model("vit_base_patch16_384", pretrained=pretrained)
+    path = '/home/myid/das59179/pretrained/vit_base_patches_best_model.pkl'
+    model = timm.create_model("vit_base_patch16_384", num_classes=23)#, checkpoint_path=path)
 
     hooks = [2, 5, 8, 11] if hooks == None else hooks
     return _make_vit_b16_backbone(
